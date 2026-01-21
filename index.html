@@ -2,97 +2,145 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Surpresa 💖</title>
+  <title>Para Bianca 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
       height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      font-family: 'Arial', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: Arial, sans-serif;
       overflow: hidden;
+      color: white;
+      text-align: center;
+    }
+
+    .box {
+      background: rgba(0,0,0,0.3);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 90%;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      width: 80%;
+      font-size: 16px;
     }
 
     button {
-      padding: 20px 40px;
-      font-size: 22px;
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 18px;
       border: none;
       border-radius: 50px;
-      background-color: #ff3366;
+      background: #ff3366;
       color: white;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: transform 0.2s;
-    }
-
-    button:hover {
-      transform: scale(1.1);
-    }
-
-    .conteudo {
-      display: none;
-      text-align: center;
-      color: #fff;
     }
 
     h1 {
-      font-size: 50px;
+      font-size: 38px;
       margin-bottom: 10px;
     }
 
     p {
-      font-size: 24px;
+      font-size: 22px;
+      min-height: 60px;
     }
 
     .coracao {
       position: absolute;
-      color: #ff3366;
       font-size: 24px;
-      animation: subir 5s linear infinite;
+      animation: subir 6s linear infinite;
     }
 
     @keyframes subir {
-      0% {
-        bottom: -10%;
-        opacity: 1;
-      }
-      100% {
-        bottom: 110%;
-        opacity: 0;
-      }
+      0% { bottom: -10%; opacity: 1; }
+      100% { bottom: 110%; opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <button id="botao" onclick="mostrarAmor()">Clique aqui 💌</button>
-
-  <div class="conteudo" id="amor">
-    <h1>Bianca 💖</h1>
-    <p>Você é muito especial pra mim</p>
-    <p>Eu te amo mais do que palavras podem dizer 💕</p>
-    <p>Obrigado por existir na minha vida 😍</p>
+  <!-- TELA DA SENHA -->
+  <div class="box" id="login">
+    <h2>💌 Surpresa Especial</h2>
+    <p>qual o nome do seu namorado?</p>
+    <input type="text" id="senha" placeholder="Digite aqui...">
+    <br>
+    <button onclick="verificar()">Entrar 💖</button>
   </div>
 
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="box" id="conteudo" style="display:none;">
+    <h1>Bianca 💕</h1>
+    <p id="texto"></p>
+  </div>
+
+  <!-- MÚSICA -->
+<audio id="musica" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_8c2a4c7f34.mp3" type="audio/mp3">
+</audio>
+
+
   <script>
-    function mostrarAmor() {
-      document.getElementById("botao").style.display = "none";
-      document.getElementById("amor").style.display = "block";
+    const mensagem = [
+      "Biaca, vc e a pessoa em que mais amo nessa vida.",
+      "só ao ver seu sorriso alegra o meu dia .",
+      "Eu sou muito feliz de ter vc como minha namorada.",
+      "Eu te amo mais do que palavras conseguem explicar. 💖",
+      "Por meio disso expresso meu amor para a mulher que sera minha futura esposa."
+    ];
 
-      for (let i = 0; i < 30; i++) {
-        let coracao = document.createElement("div");
-        coracao.innerHTML = "❤️";
-        coracao.className = "coracao";
-        coracao.style.left = Math.random() * 100 + "vw";
-        coracao.style.animationDuration = (Math.random() * 3 + 3) + "s";
-        document.body.appendChild(coracao);
+    let linha = 0;
+    let letra = 0;
 
-        setTimeout(() => {
-          coracao.remove();
-        }, 5000);
+    function verificar() {
+      const valor = document.getElementById("senha").value.toLowerCase();
+      if (valor === "iury") { // 🔴 TROQUE PELO SEU NOME
+        document.getElementById("login").style.display = "none";
+        document.getElementById("conteudo").style.display = "block";
+        document.getElementById("musica").play();
+        escrever();
+        coracoes();
+      } else {
+        alert("Hmm... tenta de novo 😘");
       }
+    }
+
+    function escrever() {
+      if (linha < mensagem.length) {
+        if (letra < mensagem[linha].length) {
+          document.getElementById("texto").innerHTML += mensagem[linha].charAt(letra);
+          letra++;
+          setTimeout(escrever, 50);
+        } else {
+          document.getElementById("texto").innerHTML += "<br><br>";
+          letra = 0;
+          linha++;
+          setTimeout(escrever, 800);
+        }
+      }
+    }
+
+    function coracoes() {
+      setInterval(() => {
+        const c = document.createElement("div");
+        c.className = "coracao";
+        c.innerHTML = "❤️";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.animationDuration = (Math.random() * 3 + 4) + "s";
+        document.body.appendChild(c);
+
+        setTimeout(() => c.remove(), 7000);
+      }, 300);
     }
   </script>
 
